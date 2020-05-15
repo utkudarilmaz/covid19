@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+          android:id="@+id/summaryMenu"
+          android:icon="@drawable/ic_world_summary"
+          android:title="Ozet" />
+
+  <item
+          android:id="@+id/worldMenu"
+          android:icon="@drawable/ic_idn_summary"
+          android:title="Dunya" />
+
+  <item
+          android:id="@+id/newsMenu"
+          android:icon="@drawable/ic_news"
+          android:title="Haberler" />
+</menu>
