@@ -31,6 +31,8 @@
     <activity
             android:name=".NewsActivity"
             android:label="News" />
+
+    <receiver android:name=".AlarmReceiver"/>
   </application>
 
 </manifest>
