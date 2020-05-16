@@ -42,7 +42,6 @@ public class Fetcher {
         return countries;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static List<NewsModel> fetchNews() throws IOException, JSONException {
 
         HttpURLConnection urlConnection = null;
@@ -50,13 +49,12 @@ public class Fetcher {
         urlConnection = (HttpURLConnection) url.openConnection();
 
         String userCredentials = "apikey 4gRBWILcPMMV1lHWOC0vVu:0kylcjqFHbDGhe7tgARyN1";
-        String basicAuth = "apikey " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("content-type", "application/json");
         urlConnection.setRequestProperty ("authorization", userCredentials);
-        urlConnection.setReadTimeout(10000 /* milliseconds */ );
-        urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+        urlConnection.setReadTimeout(100000 /* milliseconds */ );
+        urlConnection.setConnectTimeout(30000 /* milliseconds */ );
         urlConnection.setDoOutput(true);
         urlConnection.connect();
 
@@ -101,11 +99,6 @@ public class Fetcher {
         return news;
     }
 
-
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
         URL url = new URL(urlString);
