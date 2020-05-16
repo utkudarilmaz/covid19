@@ -1,13 +1,19 @@
 package com.example.covid19;
 
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +28,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         CardView cv;
         TextView textViewHeader;
         TextView textViewDescription;
+        ImageView imageView;
 
 
         NewsViewHolder(View itemView) {
@@ -29,6 +36,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             cv = (CardView)itemView.findViewById(R.id.cardView);
             this.textViewHeader = (TextView) itemView.findViewById(R.id.header);
             this.textViewDescription = (TextView) itemView.findViewById(R.id.description);
+            this.imageView = (ImageView) itemView.findViewById(R.id.image);
 
         }
     }
@@ -44,7 +52,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int i) {
         holder.textViewHeader.setText(news.get(i).name);
-        holder.textViewDescription.setText(String.valueOf(news.get(i).description));
+        holder.textViewDescription.setText(news.get(i).description);
+        Drawable d = null;
+        try {
+            InputStream is = (InputStream) new URL(news.get(i).image).getContent();
+            d = Drawable.createFromStream(is, "src name");
+
+        } catch (Exception e) {
+            System.err.println("image convert error");
+        }
+        holder.imageView.setImageDrawable(d);
     }
 
     @Override
