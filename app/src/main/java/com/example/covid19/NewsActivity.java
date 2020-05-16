@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,25 +13,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-public class WorldActivity extends AppCompatActivity {
-
+public class NewsActivity extends AppCompatActivity {
 
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<CountryModel> data;
+    private static ArrayList<NewsModel> data;
     static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItems;
 
@@ -42,7 +33,7 @@ public class WorldActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_world);
+        setContentView(R.layout.activity_news);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -50,18 +41,17 @@ public class WorldActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        ArrayList<CountryModel> countries = null;
+        ArrayList<NewsModel> news = null;
         try {
-            countries = (ArrayList<CountryModel>) Fetcher.fetch();
+            news = (ArrayList<NewsModel>) Fetcher.fetchNews();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        CountryAdapter adapter = new CountryAdapter(countries);
+        NewsAdapter adapter = new NewsAdapter(news);
         recyclerView.setAdapter(adapter);
-
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -70,20 +60,20 @@ public class WorldActivity extends AppCompatActivity {
                 Intent intent = null;
                 switch (item.getItemId()) {
                     case R.id.summaryMenu:
-                        intent = new Intent(WorldActivity.this, MainActivity.class);
+                        intent = new Intent(NewsActivity.this, MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.worldMenu:
-                        intent = new Intent(WorldActivity.this, WorldActivity.class);
+                        intent = new Intent(NewsActivity.this, WorldActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.newsMenu:
-                        intent = new Intent(WorldActivity.this, NewsActivity.class);
+                        intent = new Intent(NewsActivity.this, NewsActivity.class);
                         startActivity(intent);
-                        break;                   }
+                        break;
+                }
                 return true;
             }
         });
     }
 }
-
