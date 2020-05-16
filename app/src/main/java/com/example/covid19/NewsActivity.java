@@ -1,5 +1,7 @@
 package com.example.covid19;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +26,6 @@ public class NewsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<NewsModel> data;
-    static View.OnClickListener myOnClickListener;
-    private static ArrayList<Integer> removedItems;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -34,6 +34,8 @@ public class NewsActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+
+        Context context = getApplicationContext();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -50,7 +52,7 @@ public class NewsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        NewsAdapter adapter = new NewsAdapter(news);
+        NewsAdapter adapter = new NewsAdapter(context, news);
         recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNav);
